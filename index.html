@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e18">
+<title>Вхідний дзвінок · Важливо</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Nunito',-apple-system,sans-serif;
+  background:#000;color:#fff;
+  user-select:none;-webkit-user-select:none;
+}
+
+.phone{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(80,90,120,.6), transparent 55%),
+    radial-gradient(circle at 75% 80%, rgba(40,60,90,.7), transparent 60%),
+    linear-gradient(160deg,#1a1f2e 0%,#0a0e18 100%);
+  overflow:hidden;
+}
+.phone::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 25% 40%, rgba(255,255,255,.02) 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.03) 1px, transparent 1.5px);
+  background-size: 13px 13px, 19px 19px;
+  pointer-events:none;
+}
+
+/* ============ ВХІДНИЙ ДЗВІНОК ============ */
+.incoming{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between;
+  padding:60px 24px 50px;
+  transition:opacity .5s ease, transform .5s ease;
+  z-index:2;
+}
+.incoming.gone{opacity:0;transform:scale(.95);pointer-events:none}
+
+.call-status{text-align:center;margin-top:20px}
+.call-status .label{
+  font-size:14px;font-weight:800;letter-spacing:.3em;
+  text-transform:uppercase;color:#94a3b8;margin-bottom:8px;
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:.6}50%{opacity:1}}
+.call-status .time{font-size:15px;font-weight:700;color:#cbd5e1;letter-spacing:.1em}
+
+.caller{
+  text-align:center;display:flex;flex-direction:column;
+  align-items:center;gap:16px;
+}
+.avatar{
+  position:relative;
+  width:clamp(140px, 32vw, 190px);
+  height:clamp(140px, 32vw, 190px);
+  border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%, #5a6f9e, #2d3a5c 60%, #1a2338);
+  box-shadow:
+    0 0 0 6px rgba(255,255,255,.08),
+    0 0 0 12px rgba(255,255,255,.04),
+    0 20px 60px -10px rgba(0,0,0,.7),
+    inset 0 -6px 20px rgba(0,0,0,.5),
+    inset 0 6px 20px rgba(255,255,255,.1);
+  animation:ringPulse 1.6s ease-in-out infinite;
+}
+@keyframes ringPulse{
+  0%,100%{box-shadow:0 0 0 6px rgba(255,255,255,.08),0 0 0 12px rgba(255,255,255,.04),0 20px 60px -10px rgba(0,0,0,.7),inset 0 -6px 20px rgba(0,0,0,.5),inset 0 6px 20px rgba(255,255,255,.1)}
+  50%{box-shadow:0 0 0 12px rgba(100,180,255,.2),0 0 0 24px rgba(100,180,255,.08),0 20px 60px -10px rgba(0,0,0,.7),inset 0 -6px 20px rgba(0,0,0,.5),inset 0 6px 20px rgba(255,255,255,.1)}
+}
+.avatar .initials{
+  font-weight:900;color:#fff;
+  text-shadow:0 2px 8px rgba(0,0,0,.5);
+  letter-spacing:2px;
+  font-size:clamp(58px, 16vw, 80px);
+}
+
+.caller-info{text-align:center}
+.caller-info .name{
+  font-size:clamp(24px, 5.5vw, 34px);
+  font-weight:900;letter-spacing:-.02em;color:#fff;
+  margin-bottom:6px;text-shadow:0 3px 12px rgba(0,0,0,.5);
+  line-height:1.1;
+}
+.caller-info .role{
+  font-size:clamp(13px, 2.5vw, 16px);
+  font-weight:700;color:#9fb3d1;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.caller-info .role::before{content:'🏛️';margin-right:6px}
+
+.actions{
+  display:flex;gap:clamp(60px, 18vw, 120px);
+  align-items:center;margin-bottom:20px;
+}
+.action-btn{
+  width:clamp(70px, 15vw, 86px);
+  height:clamp(70px, 15vw, 86px);
+  border-radius:50%;border:none;
+  display:grid;place-items:center;
+  font-size:clamp(30px, 6vw, 38px);
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.5),inset 0 -4px 8px rgba(0,0,0,.25),inset 0 4px 8px rgba(255,255,255,.25);
+  transition:transform .18s ease, box-shadow .18s;
+  position:relative;
+}
+.action-btn:active{transform:scale(.92)}
+.action-btn--decline{
+  background:linear-gradient(145deg,#ff5a5a,#c1272d);
+  animation:shakeDec 3s ease-in-out infinite;
+}
+@keyframes shakeDec{
+  0%,100%{transform:rotate(0)}
+  10%,30%,50%{transform:rotate(-8deg)}
+  20%,40%{transform:rotate(8deg)}
+  60%{transform:rotate(0)}
+}
+.action-btn--answer{
+  background:linear-gradient(145deg,#4ade80,#15803d);
+  animation:bounceAns 1s ease-in-out infinite;
+}
+@keyframes bounceAns{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.action-btn__label{
+  position:absolute;bottom:-30px;left:50%;
+  transform:translateX(-50%);
+  font-family:'Nunito',sans-serif;font-size:13px;
+  font-weight:800;color:#cbd5e1;letter-spacing:.06em;
+  white-space:nowrap;
+}
+.actions .action-btn--answer .action-btn__label{color:#7ef0dc}
+
+/* ============ РОЗМОВА ============ */
+.incall{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  background:linear-gradient(160deg,#101728 0%,#06080f 100%);
+  opacity:0;pointer-events:none;
+  transition:opacity .5s ease;
+  z-index:3;
+}
+.incall.active{opacity:1;pointer-events:auto}
+
+.call-head{
+  flex:0 0 auto;
+  padding:calc(env(safe-area-inset-top) + 20px) 22px 14px;
+  display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:rgba(8,13,24,.6);
+  backdrop-filter:blur(8px);
+}
+.call-head .mini-av{
+  width:52px;height:52px;border-radius:50%;
+  display:grid;place-items:center;font-size:20px;font-weight:900;
+  background:radial-gradient(circle at 35% 30%,#5a6f9e,#2d3a5c 60%,#1a2338);
+  box-shadow:0 4px 12px rgba(0,0,0,.5),inset 0 -3px 8px rgba(0,0,0,.4),inset 0 3px 8px rgba(255,255,255,.1);
+  flex-shrink:0;color:#fff;
+}
+.call-head .mini-info{flex:1;min-width:0}
+.call-head .mini-info .n{
+  font-size:15px;font-weight:900;color:#fff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.call-head .mini-info .t{
+  font-size:13px;font-weight:700;color:#7ef0dc;
+  font-variant-numeric:tabular-nums;letter-spacing:.05em;
+}
+.call-head .live{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:#ff5a5a;margin-right:6px;
+  animation:pulseDot 1.4s ease-in-out infinite;
+}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.4}}
+
+/* Головний екран під час розмови — аватар + "говорить" */
+.talking-stage{
+  flex:1 1 auto;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:20px;
+  position:relative;
+}
+.talk-avatar{
+  width:clamp(130px, 30vw, 180px);
+  height:clamp(130px, 30vw, 180px);
+  border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#5a6f9e,#2d3a5c 60%,#1a2338);
+  box-shadow:
+    0 0 0 6px rgba(255,255,255,.06),
+    0 20px 60px -10px rgba(0,0,0,.7),
+    inset 0 -6px 20px rgba(0,0,0,.5),
+    inset 0 6px 20px rgba(255,255,255,.1);
+  color:#fff;font-weight:900;
+  font-size:clamp(52px, 14vw, 72px);
+  letter-spacing:2px;
+  transition:box-shadow .3s;
+  margin-bottom:20px;
+  position:relative;
+}
+.talk-avatar.speaking{
+  animation:speakPulse .8s ease-in-out infinite;
+}
+@keyframes speakPulse{
+  0%,100%{box-shadow:0 0 0 6px rgba(255,255,255,.06),0 0 0 18px rgba(100,180,255,.12),0 20px 60px -10px rgba(0,0,0,.7),inset 0 -6px 20px rgba(0,0,0,.5),inset 0 6px 20px rgba(255,255,255,.1)}
+  50%{box-shadow:0 0 0 6px rgba(255,255,255,.06),0 0 0 34px rgba(100,180,255,.04),0 20px 60px -10px rgba(0,0,0,.7),inset 0 -6px 20px rgba(0,0,0,.5),inset 0 6px 20px rgba(255,255,255,.1)}
+}
+
+/* Хвильки звуку від "голосу" */
+.voice-waves{
+  display:flex;
+  gap:4px;
+  align-items:center;
+  height:34px;
+  margin-bottom:14px;
+  opacity:0;
+  transition:opacity .3s;
+}
+.voice-waves.active{opacity:1}
+.voice-waves span{
+  display:block;
+  width:4px;
+  border-radius:4px;
+  background:linear-gradient(to top,#4fd1c5,#7ef0dc);
+  box-shadow:0 0 8px rgba(79,209,197,.6);
+  animation:wave 1s ease-in-out infinite;
+}
+.voice-waves span:nth-child(1){height:14px;animation-delay:0s}
+.voice-waves span:nth-child(2){height:26px;animation-delay:.1s}
+.voice-waves span:nth-child(3){height:34px;animation-delay:.2s}
+.voice-waves span:nth-child(4){height:22px;animation-delay:.3s}
+.voice-waves span:nth-child(5){height:18px;animation-delay:.4s}
+.voice-waves span:nth-child(6){height:28px;animation-delay:.15s}
+.voice-waves span:nth-child(7){height:16px;animation-delay:.35s}
+@keyframes wave{
+  0%,100%{transform:scaleY(.4)}
+  50%{transform:scaleY(1.15)}
+}
+
+.speaker-name{
+  font-size:clamp(15px, 3vw, 18px);
+  font-weight:900;
+  color:#fff;
+  letter-spacing:.02em;
+  margin-bottom:4px;
+}
+.speaker-status{
+  font-size:clamp(12px, 2vw, 14px);
+  font-weight:700;
+  color:#7ef0dc;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* Субтитри (можна приховати) */
+.subtitle{
+  position:absolute;
+  bottom:12px;
+  left:16px;right:16px;
+  text-align:center;
+  padding:12px 16px;
+  background:rgba(8,13,24,.85);
+  border:1px solid rgba(120,180,255,.2);
+  border-radius:14px;
+  font-size:clamp(13px, 3vw, 15px);
+  font-weight:700;
+  color:#eaf2ff;
+  line-height:1.45;
+  backdrop-filter:blur(10px);
+  opacity:0;
+  transition:opacity .3s;
+  min-height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.subtitle.show{opacity:1}
+.subtitle.hidden-mode{display:none}
+
+/* Керування */
+.call-controls{
+  flex:0 0 auto;
+  padding:16px 22px calc(20px + env(safe-area-inset-bottom));
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  background:linear-gradient(to top,rgba(6,10,20,.95),transparent);
+}
+.ctrl-btn{
+  padding:13px 24px;
+  border:none;border-radius:16px;
+  font-family:'Nunito',sans-serif;
+  font-weight:900;font-size:14px;
+  cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:transform .12s, box-shadow .12s, background .18s;
+  letter-spacing:.03em;
+}
+.ctrl-btn--ghost{
+  background:rgba(255,255,255,.08);
+  border:2px solid rgba(255,255,255,.15);
+  color:#cbd5e1;
+  box-shadow:0 4px 0 rgba(0,0,0,.4);
+}
+.ctrl-btn--ghost:active{box-shadow:0 1px 0 rgba(0,0,0,.4)}
+.ctrl-btn--ghost.active{
+  background:linear-gradient(145deg,#ffe066,#ffb020);
+  border-color:transparent;
+  color:#3a1e00;
+}
+.ctrl-btn--hangup{
+  background:linear-gradient(145deg,#ff5a5a,#c1272d);
+  color:#fff;
+  box-shadow:0 5px 0 #7a0f13;
+}
+.ctrl-btn--hangup:active{box-shadow:0 1px 0 #7a0f13}
+.ctrl-btn:active{transform:translateY(3px)}
+
+/* Попередження про голос */
+.voice-warning{
+  position:absolute;
+  top:calc(env(safe-area-inset-top) + 14px);
+  left:50%;transform:translateX(-50%);
+  padding:8px 16px;
+  background:rgba(255,217,61,.15);
+  border:1px solid rgba(255,217,61,.4);
+  border-radius:12px;
+  color:#ffd93d;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.05em;
+  text-align:center;
+  max-width:280px;
+  line-height:1.35;
+  z-index:10;
+  display:none;
+}
+.voice-warning.show{display:block}
+
+/* Пропущений */
+.missed-note{
+  position:absolute;inset:0;
+  display:none;place-items:center;text-align:center;
+  padding:40px 24px;
+  background:rgba(8,13,24,.94);
+  backdrop-filter:blur(12px);z-index:5;
+}
+.missed-note.show{display:grid}
+.missed-note .icon{font-size:80px;margin-bottom:16px;opacity:.6}
+.missed-note h2{font-size:24px;font-weight:900;margin-bottom:10px;color:#eaf2ff}
+.missed-note p{
+  font-size:16px;font-weight:700;color:#9fb3d1;line-height:1.55;max-width:340px;
+}
+.missed-note .btn-back{
+  margin-top:26px;
+  padding:14px 30px;border-radius:16px;border:none;
+  background:linear-gradient(145deg,#4fd1c5,#0d9488);
+  color:#04121a;
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;
+  cursor:pointer;box-shadow:0 6px 0 #065f56;
+}
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- ═══ ВХІДНИЙ ДЗВІНОК ═══ -->
+  <div class="incoming" id="incomingScreen">
+    <div class="call-status">
+      <div class="label">Вхідний дзвінок</div>
+      <div class="time" id="timeNow">—</div>
+    </div>
+
+    <div class="caller">
+      <div class="avatar">
+        <span class="initials">ЗМ</span>
+      </div>
+      <div class="caller-info">
+        <div class="name">Заступник мера</div>
+        <div class="role">Терміновий виклик</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn action-btn--decline" id="btnDecline" aria-label="Відхилити">
+        ✕
+        <span class="action-btn__label">Відхилити</span>
+      </button>
+      <button class="action-btn action-btn--answer" id="btnAnswer" aria-label="Відповісти">
+        ☎
+        <span class="action-btn__label">Відповісти</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══ РОЗМОВА ═══ -->
+  <div class="incall" id="incallScreen">
+    <div class="call-head">
+      <div class="mini-av">ЗМ</div>
+      <div class="mini-info">
+        <div class="n">Заступник мера · Терміново</div>
+        <div class="t"><span class="live"></span><span id="callTimer">00:00</span></div>
+      </div>
+    </div>
+
+    <div class="talking-stage">
+      <div class="talk-avatar" id="talkAvatar">ЗМ</div>
+
+      <div class="voice-waves" id="voiceWaves">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="speaker-name" id="speakerName">Заступник мера</div>
+      <div class="speaker-status" id="speakerStatus">говорить...</div>
+
+      <div class="subtitle" id="subtitle"></div>
+    </div>
+
+    <div class="call-controls">
+      <button class="ctrl-btn ctrl-btn--ghost" id="btnRepeat">🔁 Повторити</button>
+      <button class="ctrl-btn ctrl-btn--ghost" id="btnSubs">💬 Субтитри</button>
+      <button class="ctrl-btn ctrl-btn--hangup" id="btnHangup">📵 Завершити</button>
+    </div>
+
+    <div class="voice-warning" id="voiceWarning">
+      ⚠️ Голос недоступний у цьому браузері. Використовуйте субтитри.
+    </div>
+  </div>
+
+  <!-- ═══ ПРОПУЩЕНИЙ ═══ -->
+  <div class="missed-note" id="missedNote">
+    <div>
+      <div class="icon">📵</div>
+      <h2>Ви відхилили дзвінок</h2>
+      <p>Заступник мера чекає. Це терміново — спробуйте ще раз.</p>
+      <button class="btn-back" id="btnRetry">📞 Передзвонити</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   НАЛАШТУВАННЯ — ЗМІНЮЙТЕ ТУТ
+   ============================================================ */
+
+const SPEAKER = {
+  name: 'Заступник мера',
+  gender: 'male'
+};
+
+/* Діалог. Кожна репліка озвучується реальним голосом.
+   pause — пауза ПІСЛЯ репліки (мс) */
+const DIALOGUE = [
+  {
+    text: 'Вітаю. Це заступник мера міста.Олена Юріївна',
+    pause: 1400
+  },
+  {
+    text: 'У нас надзвичайна ситуація.',
+    pause: 1800
+  },
+  {
+    text:  'Хтось зачарував усі знаки напрямку до укриття в ліцеї номер шість',
+    pause: 1600
+  },
+  {
+    text: 'Люди йдуть не туди. Діти губляться.',
+    pause: 1600
+  },
+  {
+    text: 'Ви ж дослідники ! Треба винайти прилад правди.',
+    pause: 2000
+  },
+  {
+    text: 'Його треба винайти! У вас 30 хвилин.',
+    pause: 1800
+  },
+  {
+    text: 'Його треба винайти! У вас 30 хвилин.',
+    pause: 1800
+  },
+];
+
+/* ============================================================
+   СТАН
+   ============================================================ */
+const incomingScreen = document.getElementById('incomingScreen');
+const incallScreen   = document.getElementById('incallScreen');
+const talkAvatar     = document.getElementById('talkAvatar');
+const voiceWaves     = document.getElementById('voiceWaves');
+const speakerName    = document.getElementById('speakerName');
+const speakerStatus  = document.getElementById('speakerStatus');
+const subtitle       = document.getElementById('subtitle');
+const callTimerEl    = document.getElementById('callTimer');
+const timeNow        = document.getElementById('timeNow');
+const missedNote     = document.getElementById('missedNote');
+const voiceWarning   = document.getElementById('voiceWarning');
+const btnAnswer      = document.getElementById('btnAnswer');
+const btnDecline     = document.getElementById('btnDecline');
+const btnHangup      = document.getElementById('btnHangup');
+const btnRetry       = document.getElementById('btnRetry');
+const btnRepeat      = document.getElementById('btnRepeat');
+const btnSubs        = document.getElementById('btnSubs');
+
+let timerInterval = null;
+let callSeconds = 0;
+let currentLine = -1;
+let isPlaying = false;
+let speechSupported = false;
+let selectedVoice = null;
+let audioCtx = null;
+let ringingAudio = null;
+let useSubtitles = true;
+
+/* ============================================================
+   АУДІО
+   ============================================================ */
+function ensureAudio(){
+  if (!audioCtx){
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    catch(e){ return null; }
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+/* Гудки */
+function playRingTone(){
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  const cycle = () => {
+    const now = ctx.currentTime;
+    [0, 0.6].forEach(offset => {
+      const t0 = now + offset;
+      const o1 = ctx.createOscillator();
+      const o2 = ctx.createOscillator();
+      const g = ctx.createGain();
+      o1.type = o2.type = 'sine';
+      o1.frequency.value = 440;
+      o2.frequency.value = 480;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.14, t0 + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.4);
+      o1.connect(g); o2.connect(g); g.connect(ctx.destination);
+      o1.start(t0); o2.start(t0);
+      o1.stop(t0 + 0.45); o2.stop(t0 + 0.45);
+    });
+  };
+  cycle();
+  ringingAudio = setInterval(cycle, 2000);
+}
+function stopRingTone(){
+  if (ringingAudio){ clearInterval(ringingAudio); ringingAudio = null; }
+}
+
+/* Короткий звук "підключено" */
+function playConnect(){
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+  o.type = 'sine';
+  o.frequency.setValueAtTime(600, now);
+  o.frequency.exponentialRampToValueAtTime(950, now + 0.12);
+  g.gain.setValueAtTime(0.0001, now);
+  g.gain.exponentialRampToValueAtTime(0.13, now + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+  o.connect(g); g.connect(ctx.destination);
+  o.start(now); o.stop(now + 0.32);
+}
+
+/* Звук кінця дзвінка */
+function playHangup(){
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+  o.type = 'sine';
+  o.frequency.setValueAtTime(500, now);
+  o.frequency.exponentialRampToValueAtTime(280, now + 0.16);
+  g.gain.setValueAtTime(0.0001, now);
+  g.gain.exponentialRampToValueAtTime(0.12, now + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+  o.connect(g); g.connect(ctx.destination);
+  o.start(now); o.stop(now + 0.35);
+}
+
+function vib(pattern){
+  if (navigator.vibrate) { try { navigator.vibrate(pattern); } catch(e){} }
+}
+
+/* ============================================================
+   ВИБІР ГОЛОСУ
+   ============================================================ */
+function pickVoice(){
+  if (!('speechSynthesis' in window)) return null;
+  const voices = speechSynthesis.getVoices();
+  if (!voices || voices.length === 0) return null;
+
+  /* Пріоритет: український чоловічий → будь-який український →
+     російський чоловічий → будь-який чоловічий → default */
+
+  const isMale = v => {
+    const n = (v.name || '').toLowerCase();
+    return n.includes('male') || n.includes('чолов') || n.includes('мужск') ||
+           n.includes('dmitri') || n.includes('yuri') || n.includes('alex') ||
+           n.includes('pavel') || n.includes('andrey');
+  };
+
+  const uk = voices.filter(v => (v.lang || '').toLowerCase().startsWith('uk'));
+  const ru = voices.filter(v => (v.lang || '').toLowerCase().startsWith('ru'));
+
+  const pick =
+    uk.find(isMale) ||
+    ru.find(isMale) ||
+    uk[0] ||
+    voices.find(isMale) ||
+    voices[0];
+
+  return pick || null;
+}
+
+/* Завантажити голоси */
+function initVoices(){
+  if (!('speechSynthesis' in window)){
+    speechSupported = false;
+    voiceWarning.classList.add('show');
+    return;
+  }
+  speechSupported = true;
+
+  const load = () => {
+    selectedVoice = pickVoice();
+    if (!selectedVoice){
+      /* Спробувати ще раз пізніше */
+      setTimeout(() => { selectedVoice = pickVoice(); }, 300);
+    }
+  };
+
+  if (speechSynthesis.getVoices().length > 0){
+    load();
+  }
+  speechSynthesis.onvoiceschanged = load;
+  /* Резервний таймаут — деякі браузери не викликають onvoiceschanged */
+  setTimeout(load, 500);
+  setTimeout(load, 1500);
+}
+
+/* ============================================================
+   ПРОМОВЛЯННЯ РЕПЛІКИ
+   ============================================================ */
+function speakLine(index){
+  if (!speechSupported || index < 0 || index >= DIALOGUE.length) return;
+
+  currentLine = index;
+  const line = DIALOGUE[index];
+
+  /* Показати субтитри (завжди, навіть якщо вимкнені — на "показ" репліки) */
+  if (useSubtitles){
+    subtitle.textContent = line.text;
+    subtitle.classList.add('show');
+  }
+
+  /* Активувати хвильки */
+  talkAvatar.classList.add('speaking');
+  voiceWaves.classList.add('active');
+  speakerStatus.textContent = 'говорить...';
+
+  /* Скасувати попередню мову */
+  try { speechSynthesis.cancel(); } catch(e){}
+
+  const utter = new SpeechSynthesisUtterance(line.text);
+  utter.lang = 'uk-UA';
+  utter.rate = 0.92;
+  utter.pitch = 0.82;   /* чоловічий тембр */
+  utter.volume = 1.0;
+  if (selectedVoice) utter.voice = selectedVoice;
+
+  utter.onstart = () => {
+    isPlaying = true;
+    /* Вібрація на початку репліки */
+    vib([20, 30, 20]);
+  };
+
+  utter.onend = () => {
+    isPlaying = false;
+    talkAvatar.classList.remove('speaking');
+    voiceWaves.classList.remove('active');
+
+    if (index + 1 < DIALOGUE.length){
+      speakerStatus.textContent = 'пауза...';
+      setTimeout(() => speakLine(index + 1), line.pause);
+    } else {
+      /* Діалог закінчено */
+      speakerStatus.textContent = 'чекає на відповідь';
+      setTimeout(() => {
+        subtitle.textContent = '✅ Дзвінок завершено. Натисніть "Завершити" або повторіть.';
+      }, 1200);
+    }
+  };
+
+  utter.onerror = (e) => {
+    isPlaying = false;
+    talkAvatar.classList.remove('speaking');
+    voiceWaves.classList.remove('active');
+    /* Якщо не вдалося — все одно продовжити */
+    if (index + 1 < DIALOGUE.length){
+      setTimeout(() => speakLine(index + 1), line.pause);
+    }
+  };
+
+  try {
+    speechSynthesis.speak(utter);
+  } catch(e){
+    /* Fallback: показати текст і продовжити */
+    setTimeout(() => {
+      talkAvatar.classList.remove('speaking');
+      voiceWaves.classList.remove('active');
+      if (index + 1 < DIALOGUE.length){
+        setTimeout(() => speakLine(index + 1), line.pause);
+      }
+    }, 3500);
+  }
+}
+
+function stopSpeech(){
+  try { speechSynthesis.cancel(); } catch(e){}
+  isPlaying = false;
+  talkAvatar.classList.remove('speaking');
+  voiceWaves.classList.remove('active');
+}
+
+/* ============================================================
+   ДЗВІНОК
+   ============================================================ */
+function updateClock(){
+  const d = new Date();
+  timeNow.textContent = String(d.getHours()).padStart(2,'0') + ':' +
+                        String(d.getMinutes()).padStart(2,'0');
+}
+
+/* Перший тач — активує аудіо (iOS/Android блокують автозвук) */
+let userInteracted = false;
+function onFirstInteraction(){
+  if (userInteracted) return;
+  userInteracted = true;
+  ensureAudio();
+  playRingTone();
+  initVoices();
+}
+document.addEventListener('touchstart', onFirstInteraction, { once: true });
+document.addEventListener('click', onFirstInteraction, { once: true });
+
+/* Відповісти */
+btnAnswer.addEventListener('click', () => {
+  ensureAudio();
+  stopRingTone();
+  playConnect();
+  vib(30);
+
+  incomingScreen.classList.add('gone');
+  setTimeout(() => {
+    incallScreen.classList.add('active');
+    startCall();
+  }, 350);
+});
+
+/* Відхилити */
+btnDecline.addEventListener('click', () => {
+  stopRingTone();
+  vib(50);
+  missedNote.classList.add('show');
+});
+
+btnRetry.addEventListener('click', () => {
+  missedNote.classList.remove('show');
+  setTimeout(() => { playRingTone(); vib([200,100,200]); }, 200);
+});
+
+/* Початок розмови */
+function startCall(){
+  callSeconds = 0;
+  callTimerEl.textContent = '00:00';
+  timerInterval = setInterval(() => {
+    callSeconds++;
+    const m = String(Math.floor(callSeconds / 60)).padStart(2,'0');
+    const s = String(callSeconds % 60).padStart(2,'0');
+    callTimerEl.textContent = m + ':' + s;
+  }, 1000);
+
+  /* Невелика пауза — щоб "мер відкашлявся" */
+  setTimeout(() => {
+    speakLine(0);
+  }, 700);
+}
+
+/* Повторити */
+btnRepeat.addEventListener('click', () => {
+  if (currentLine < 0) return;
+  stopSpeech();
+  setTimeout(() => speakLine(currentLine), 200);
+});
+
+/* Субтитри */
+btnSubs.addEventListener('click', () => {
+  useSubtitles = !useSubtitles;
+  btnSubs.classList.toggle('active', useSubtitles);
+  subtitle.classList.toggle('hidden-mode', !useSubtitles);
+  if (useSubtitles && currentLine >= 0){
+    subtitle.textContent = DIALOGUE[currentLine].text;
+    subtitle.classList.add('show');
+  }
+});
+/* Активувати кнопку субтитрів за замовчуванням */
+btnSubs.classList.add('active');
+
+/* Завершити */
+btnHangup.addEventListener('click', () => {
+  stopSpeech();
+  stopRingTone();
+  playHangup();
+  vib([80, 60, 80]);
+
+  if (timerInterval){ clearInterval(timerInterval); timerInterval = null; }
+
+  subtitle.textContent = '📵 Дзвінок завершено';
+  speakerStatus.textContent = 'роз\'єднано';
+  voiceWaves.classList.remove('active');
+  talkAvatar.classList.remove('speaking');
+
+  setTimeout(() => {
+    incallScreen.classList.remove('active');
+    incomingScreen.classList.remove('gone');
+    currentLine = -1;
+    subtitle.classList.remove('show');
+    /* Знову дзвонити (щоб можна було повторити для наступного класу) */
+    setTimeout(() => { playRingTone(); vib([200,100,200,100,200]); }, 400);
+  }, 2000);
+});
+
+/* ============================================================
+   СТАРТ
+   ============================================================ */
+updateClock();
+initVoices();
+/* Автоматичний запуск гудків після першої взаємодії */
+vib([200, 100, 200, 100, 200]);
+
+/* Клавіатура */
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !incomingScreen.classList.contains('gone')){
+    e.preventDefault();
+    btnAnswer.click();
+  }
+  if (e.key === 'Escape' && incallScreen.classList.contains('active')){
+    e.preventDefault();
+    btnHangup.click();
+  }
+  if (e.key === 'r' && incallScreen.classList.contains('active')){
+    e.preventDefault();
+    btnRepeat.click();
+  }
+});
+
+/* Запобігти закриттю при випадковому свайпі */
+document.addEventListener('touchmove', (e) => {
+  if (e.touches.length > 1) e.preventDefault();
+}, { passive: false });
+</script>
+
+</body>
+</html>
