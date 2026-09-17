@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0a0e18">
-<title>Вхідний дзвінок · Важливо</title>
+<title>Вхідний дзвінок · Терміново</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -180,7 +180,6 @@ body{
 }
 @keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.4}}
 
-/* Головний екран під час розмови — аватар + "говорить" */
 .talking-stage{
   flex:1 1 auto;
   display:flex;flex-direction:column;
@@ -206,29 +205,20 @@ body{
   margin-bottom:20px;
   position:relative;
 }
-.talk-avatar.speaking{
-  animation:speakPulse .8s ease-in-out infinite;
-}
+.talk-avatar.speaking{animation:speakPulse .8s ease-in-out infinite}
 @keyframes speakPulse{
   0%,100%{box-shadow:0 0 0 6px rgba(255,255,255,.06),0 0 0 18px rgba(100,180,255,.12),0 20px 60px -10px rgba(0,0,0,.7),inset 0 -6px 20px rgba(0,0,0,.5),inset 0 6px 20px rgba(255,255,255,.1)}
   50%{box-shadow:0 0 0 6px rgba(255,255,255,.06),0 0 0 34px rgba(100,180,255,.04),0 20px 60px -10px rgba(0,0,0,.7),inset 0 -6px 20px rgba(0,0,0,.5),inset 0 6px 20px rgba(255,255,255,.1)}
 }
 
-/* Хвильки звуку від "голосу" */
 .voice-waves{
-  display:flex;
-  gap:4px;
-  align-items:center;
-  height:34px;
-  margin-bottom:14px;
-  opacity:0;
-  transition:opacity .3s;
+  display:flex;gap:4px;align-items:center;
+  height:34px;margin-bottom:14px;
+  opacity:0;transition:opacity .3s;
 }
 .voice-waves.active{opacity:1}
 .voice-waves span{
-  display:block;
-  width:4px;
-  border-radius:4px;
+  display:block;width:4px;border-radius:4px;
   background:linear-gradient(to top,#4fd1c5,#7ef0dc);
   box-shadow:0 0 8px rgba(79,209,197,.6);
   animation:wave 1s ease-in-out infinite;
@@ -240,31 +230,22 @@ body{
 .voice-waves span:nth-child(5){height:18px;animation-delay:.4s}
 .voice-waves span:nth-child(6){height:28px;animation-delay:.15s}
 .voice-waves span:nth-child(7){height:16px;animation-delay:.35s}
-@keyframes wave{
-  0%,100%{transform:scaleY(.4)}
-  50%{transform:scaleY(1.15)}
-}
+@keyframes wave{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1.15)}}
 
 .speaker-name{
   font-size:clamp(15px, 3vw, 18px);
-  font-weight:900;
-  color:#fff;
-  letter-spacing:.02em;
-  margin-bottom:4px;
+  font-weight:900;color:#fff;
+  letter-spacing:.02em;margin-bottom:4px;
 }
 .speaker-status{
   font-size:clamp(12px, 2vw, 14px);
-  font-weight:700;
-  color:#7ef0dc;
-  letter-spacing:.1em;
-  text-transform:uppercase;
+  font-weight:700;color:#7ef0dc;
+  letter-spacing:.1em;text-transform:uppercase;
 }
 
-/* Субтитри (можна приховати) */
 .subtitle{
   position:absolute;
-  bottom:12px;
-  left:16px;right:16px;
+  bottom:12px;left:16px;right:16px;
   text-align:center;
   padding:12px 16px;
   background:rgba(8,13,24,.85);
@@ -279,28 +260,21 @@ body{
   transition:opacity .3s;
   min-height:46px;
   display:flex;
-  align-items:center;
-  justify-content:center;
+  align-items:center;justify-content:center;
 }
 .subtitle.show{opacity:1}
 .subtitle.hidden-mode{display:none}
 
-/* Керування */
 .call-controls{
   flex:0 0 auto;
   padding:16px 22px calc(20px + env(safe-area-inset-bottom));
-  display:flex;
-  justify-content:center;
-  gap:14px;
+  display:flex;justify-content:center;gap:14px;
   background:linear-gradient(to top,rgba(6,10,20,.95),transparent);
 }
 .ctrl-btn{
-  padding:13px 24px;
-  border:none;border-radius:16px;
-  font-family:'Nunito',sans-serif;
-  font-weight:900;font-size:14px;
-  cursor:pointer;
-  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 24px;border:none;border-radius:16px;
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:14px;
+  cursor:pointer;display:inline-flex;align-items:center;gap:8px;
   transition:transform .12s, box-shadow .12s, background .18s;
   letter-spacing:.03em;
 }
@@ -313,8 +287,7 @@ body{
 .ctrl-btn--ghost:active{box-shadow:0 1px 0 rgba(0,0,0,.4)}
 .ctrl-btn--ghost.active{
   background:linear-gradient(145deg,#ffe066,#ffb020);
-  border-color:transparent;
-  color:#3a1e00;
+  border-color:transparent;color:#3a1e00;
 }
 .ctrl-btn--hangup{
   background:linear-gradient(145deg,#ff5a5a,#c1272d);
@@ -324,7 +297,6 @@ body{
 .ctrl-btn--hangup:active{box-shadow:0 1px 0 #7a0f13}
 .ctrl-btn:active{transform:translateY(3px)}
 
-/* Попередження про голос */
 .voice-warning{
   position:absolute;
   top:calc(env(safe-area-inset-top) + 14px);
@@ -333,19 +305,13 @@ body{
   background:rgba(255,217,61,.15);
   border:1px solid rgba(255,217,61,.4);
   border-radius:12px;
-  color:#ffd93d;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.05em;
-  text-align:center;
-  max-width:280px;
-  line-height:1.35;
-  z-index:10;
-  display:none;
+  color:#ffd93d;font-size:12px;font-weight:800;
+  letter-spacing:.05em;text-align:center;
+  max-width:280px;line-height:1.35;
+  z-index:10;display:none;
 }
 .voice-warning.show{display:block}
 
-/* Пропущений */
 .missed-note{
   position:absolute;inset:0;
   display:none;place-items:center;text-align:center;
@@ -366,6 +332,60 @@ body{
   color:#04121a;
   font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;
   cursor:pointer;box-shadow:0 6px 0 #065f56;
+}
+
+/* ============ ЕКРАН ЗАВЕРШЕННЯ ============ */
+.ended{
+  position:absolute;inset:0;
+  display:none;place-items:center;text-align:center;
+  padding:40px 24px;
+  background:linear-gradient(160deg,#101728 0%,#06080f 100%);
+  z-index:6;
+}
+.ended.show{display:grid}
+.ended .check{
+  font-size:80px;
+  margin-bottom:16px;
+  filter:drop-shadow(0 4px 12px rgba(79,209,197,.5));
+  animation:checkPop .5s cubic-bezier(.4,1.4,.5,1);
+}
+@keyframes checkPop{
+  0%{transform:scale(0) rotate(-30deg);opacity:0}
+  100%{transform:scale(1) rotate(0);opacity:1}
+}
+.ended h2{
+  font-size:26px;font-weight:900;
+  color:#eaf2ff;margin-bottom:12px;
+}
+.ended p{
+  font-size:16px;font-weight:700;
+  color:#9fb3d1;line-height:1.55;
+  max-width:360px;
+  margin-bottom:8px;
+}
+.ended .hint{
+  font-size:14px;
+  color:#7ef0dc;
+  font-weight:800;
+  margin-top:20px;
+  padding:12px 18px;
+  background:rgba(79,209,197,.1);
+  border:1px dashed rgba(79,209,197,.35);
+  border-radius:12px;
+  max-width:340px;
+}
+.ended .btn-replay{
+  margin-top:26px;
+  padding:14px 30px;border-radius:16px;border:none;
+  background:linear-gradient(145deg,#ffe066,#ffb020);
+  color:#3a1e00;
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;
+  cursor:pointer;box-shadow:0 6px 0 #b45309;
+  transition:transform .12s, box-shadow .12s;
+}
+.ended .btn-replay:active{
+  transform:translateY(3px);
+  box-shadow:0 2px 0 #b45309;
 }
 </style>
 </head>
@@ -447,49 +467,49 @@ body{
     </div>
   </div>
 
+  <!-- ═══ ЗАВЕРШЕНО ═══ -->
+  <div class="ended" id="endedScreen">
+    <div>
+      <div class="check">✅</div>
+      <h2>Дзвінок завершено</h2>
+      <p>Заступник мера дав вам <b>30 хвилин</b>.</p>
+      <p>Час винаходити прилад правди!</p>
+      <div class="hint">📞 Щоб переграти дзвінок — натисніть кнопку нижче</div>
+      <button class="btn-replay" id="btnReplay">🔁 Повторити дзвінок</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
 /* ============================================================
-   НАЛАШТУВАННЯ — ЗМІНЮЙТЕ ТУТ
+   ДІАЛОГ
    ============================================================ */
-
-const SPEAKER = {
-  name: 'Заступник мера',
-  gender: 'male'
-};
-
-/* Діалог. Кожна репліка озвучується реальним голосом.
-   pause — пауза ПІСЛЯ репліки (мс) */
 const DIALOGUE = [
   {
-    text: 'Вітаю. Це заступник мера міста.Олена Юріївна',
+    text: 'Вітаю. Це заступник мера міста. Олена Юріївна',
     pause: 1400
   },
   {
     text: 'У нас надзвичайна ситуація.',
-    pause: 1800
+    pause: 1500
   },
   {
-    text:  'Хтось зачарував усі знаки напрямку до укриття в ліцеї номер шість',
-    pause: 1600
+    text: 'Хтось зачарував усі знаки напрямку до укриття в ліцеї номер шість.',
+    pause: 1700
   },
   {
     text: 'Люди йдуть не туди. Діти губляться.',
-    pause: 1600
+    pause: 1500
   },
   {
-    text: 'Ви ж дослідники ! Треба винайти прилад правди.',
-    pause: 2000
-  },
-  {
-    text: 'Його треба винайти! У вас 30 хвилин.',
+    text: 'Ви ж дослідники! Треба винайти прилад правди.',
     pause: 1800
   },
   {
-    text: 'Його треба винайти! У вас 30 хвилин.',
-    pause: 1800
-  },
+    text: 'У вас тридцять хвилин. Дійте.',
+    pause: 1500
+  }
 ];
 
 /* ============================================================
@@ -497,9 +517,9 @@ const DIALOGUE = [
    ============================================================ */
 const incomingScreen = document.getElementById('incomingScreen');
 const incallScreen   = document.getElementById('incallScreen');
+const endedScreen    = document.getElementById('endedScreen');
 const talkAvatar     = document.getElementById('talkAvatar');
 const voiceWaves     = document.getElementById('voiceWaves');
-const speakerName    = document.getElementById('speakerName');
 const speakerStatus  = document.getElementById('speakerStatus');
 const subtitle       = document.getElementById('subtitle');
 const callTimerEl    = document.getElementById('callTimer');
@@ -512,16 +532,17 @@ const btnHangup      = document.getElementById('btnHangup');
 const btnRetry       = document.getElementById('btnRetry');
 const btnRepeat      = document.getElementById('btnRepeat');
 const btnSubs        = document.getElementById('btnSubs');
+const btnReplay      = document.getElementById('btnReplay');
 
 let timerInterval = null;
 let callSeconds = 0;
 let currentLine = -1;
-let isPlaying = false;
 let speechSupported = false;
 let selectedVoice = null;
 let audioCtx = null;
 let ringingAudio = null;
 let useSubtitles = true;
+let isRinging = false;
 
 /* ============================================================
    АУДІО
@@ -535,11 +556,14 @@ function ensureAudio(){
   return audioCtx;
 }
 
-/* Гудки */
 function playRingTone(){
   const ctx = ensureAudio();
   if (!ctx) return;
+  if (isRinging) return;
+  isRinging = true;
+
   const cycle = () => {
+    if (!isRinging) return;
     const now = ctx.currentTime;
     [0, 0.6].forEach(offset => {
       const t0 = now + offset;
@@ -561,10 +585,10 @@ function playRingTone(){
   ringingAudio = setInterval(cycle, 2000);
 }
 function stopRingTone(){
+  isRinging = false;
   if (ringingAudio){ clearInterval(ringingAudio); ringingAudio = null; }
 }
 
-/* Короткий звук "підключено" */
 function playConnect(){
   const ctx = ensureAudio();
   if (!ctx) return;
@@ -581,7 +605,6 @@ function playConnect(){
   o.start(now); o.stop(now + 0.32);
 }
 
-/* Звук кінця дзвінка */
 function playHangup(){
   const ctx = ensureAudio();
   if (!ctx) return;
@@ -603,37 +626,26 @@ function vib(pattern){
 }
 
 /* ============================================================
-   ВИБІР ГОЛОСУ
+   ВИБІР ГОЛОСУ (чоловічий)
    ============================================================ */
 function pickVoice(){
   if (!('speechSynthesis' in window)) return null;
   const voices = speechSynthesis.getVoices();
   if (!voices || voices.length === 0) return null;
 
-  /* Пріоритет: український чоловічий → будь-який український →
-     російський чоловічий → будь-який чоловічий → default */
-
   const isMale = v => {
     const n = (v.name || '').toLowerCase();
     return n.includes('male') || n.includes('чолов') || n.includes('мужск') ||
            n.includes('dmitri') || n.includes('yuri') || n.includes('alex') ||
-           n.includes('pavel') || n.includes('andrey');
+           n.includes('pavel') || n.includes('andrey') || n.includes('oleg');
   };
 
   const uk = voices.filter(v => (v.lang || '').toLowerCase().startsWith('uk'));
   const ru = voices.filter(v => (v.lang || '').toLowerCase().startsWith('ru'));
 
-  const pick =
-    uk.find(isMale) ||
-    ru.find(isMale) ||
-    uk[0] ||
-    voices.find(isMale) ||
-    voices[0];
-
-  return pick || null;
+  return uk.find(isMale) || ru.find(isMale) || uk[0] || voices.find(isMale) || voices[0] || null;
 }
 
-/* Завантажити голоси */
 function initVoices(){
   if (!('speechSynthesis' in window)){
     speechSupported = false;
@@ -642,25 +654,16 @@ function initVoices(){
   }
   speechSupported = true;
 
-  const load = () => {
-    selectedVoice = pickVoice();
-    if (!selectedVoice){
-      /* Спробувати ще раз пізніше */
-      setTimeout(() => { selectedVoice = pickVoice(); }, 300);
-    }
-  };
+  const load = () => { selectedVoice = pickVoice(); };
 
-  if (speechSynthesis.getVoices().length > 0){
-    load();
-  }
+  if (speechSynthesis.getVoices().length > 0) load();
   speechSynthesis.onvoiceschanged = load;
-  /* Резервний таймаут — деякі браузери не викликають onvoiceschanged */
   setTimeout(load, 500);
   setTimeout(load, 1500);
 }
 
 /* ============================================================
-   ПРОМОВЛЯННЯ РЕПЛІКИ
+   ПРОМОВЛЯННЯ
    ============================================================ */
 function speakLine(index){
   if (!speechSupported || index < 0 || index >= DIALOGUE.length) return;
@@ -668,35 +671,27 @@ function speakLine(index){
   currentLine = index;
   const line = DIALOGUE[index];
 
-  /* Показати субтитри (завжди, навіть якщо вимкнені — на "показ" репліки) */
   if (useSubtitles){
     subtitle.textContent = line.text;
     subtitle.classList.add('show');
   }
 
-  /* Активувати хвильки */
   talkAvatar.classList.add('speaking');
   voiceWaves.classList.add('active');
   speakerStatus.textContent = 'говорить...';
 
-  /* Скасувати попередню мову */
   try { speechSynthesis.cancel(); } catch(e){}
 
   const utter = new SpeechSynthesisUtterance(line.text);
   utter.lang = 'uk-UA';
   utter.rate = 0.92;
-  utter.pitch = 0.82;   /* чоловічий тембр */
+  utter.pitch = 0.85;
   utter.volume = 1.0;
   if (selectedVoice) utter.voice = selectedVoice;
 
-  utter.onstart = () => {
-    isPlaying = true;
-    /* Вібрація на початку репліки */
-    vib([20, 30, 20]);
-  };
+  utter.onstart = () => { vib([20, 30, 20]); };
 
   utter.onend = () => {
-    isPlaying = false;
     talkAvatar.classList.remove('speaking');
     voiceWaves.classList.remove('active');
 
@@ -704,47 +699,32 @@ function speakLine(index){
       speakerStatus.textContent = 'пауза...';
       setTimeout(() => speakLine(index + 1), line.pause);
     } else {
-      /* Діалог закінчено */
       speakerStatus.textContent = 'чекає на відповідь';
       setTimeout(() => {
-        subtitle.textContent = '✅ Дзвінок завершено. Натисніть "Завершити" або повторіть.';
+        subtitle.textContent = '✅ Натисніть «Завершити», щоб продовжити.';
       }, 1200);
     }
   };
 
-  utter.onerror = (e) => {
-    isPlaying = false;
+  utter.onerror = () => {
     talkAvatar.classList.remove('speaking');
     voiceWaves.classList.remove('active');
-    /* Якщо не вдалося — все одно продовжити */
     if (index + 1 < DIALOGUE.length){
       setTimeout(() => speakLine(index + 1), line.pause);
     }
   };
 
-  try {
-    speechSynthesis.speak(utter);
-  } catch(e){
-    /* Fallback: показати текст і продовжити */
-    setTimeout(() => {
-      talkAvatar.classList.remove('speaking');
-      voiceWaves.classList.remove('active');
-      if (index + 1 < DIALOGUE.length){
-        setTimeout(() => speakLine(index + 1), line.pause);
-      }
-    }, 3500);
-  }
+  try { speechSynthesis.speak(utter); } catch(e){}
 }
 
 function stopSpeech(){
   try { speechSynthesis.cancel(); } catch(e){}
-  isPlaying = false;
   talkAvatar.classList.remove('speaking');
   voiceWaves.classList.remove('active');
 }
 
 /* ============================================================
-   ДЗВІНОК
+   ЧАС
    ============================================================ */
 function updateClock(){
   const d = new Date();
@@ -752,7 +732,9 @@ function updateClock(){
                         String(d.getMinutes()).padStart(2,'0');
 }
 
-/* Перший тач — активує аудіо (iOS/Android блокують автозвук) */
+/* ============================================================
+   ПЕРША ВЗАЄМОДІЯ
+   ============================================================ */
 let userInteracted = false;
 function onFirstInteraction(){
   if (userInteracted) return;
@@ -764,7 +746,9 @@ function onFirstInteraction(){
 document.addEventListener('touchstart', onFirstInteraction, { once: true });
 document.addEventListener('click', onFirstInteraction, { once: true });
 
-/* Відповісти */
+/* ============================================================
+   ВІДПОВІСТИ
+   ============================================================ */
 btnAnswer.addEventListener('click', () => {
   ensureAudio();
   stopRingTone();
@@ -778,7 +762,9 @@ btnAnswer.addEventListener('click', () => {
   }, 350);
 });
 
-/* Відхилити */
+/* ============================================================
+   ВІДХИЛИТИ
+   ============================================================ */
 btnDecline.addEventListener('click', () => {
   stopRingTone();
   vib(50);
@@ -790,10 +776,13 @@ btnRetry.addEventListener('click', () => {
   setTimeout(() => { playRingTone(); vib([200,100,200]); }, 200);
 });
 
-/* Початок розмови */
+/* ============================================================
+   ПОЧАТОК РОЗМОВИ
+   ============================================================ */
 function startCall(){
   callSeconds = 0;
   callTimerEl.textContent = '00:00';
+  if (timerInterval) clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     callSeconds++;
     const m = String(Math.floor(callSeconds / 60)).padStart(2,'0');
@@ -801,20 +790,21 @@ function startCall(){
     callTimerEl.textContent = m + ':' + s;
   }, 1000);
 
-  /* Невелика пауза — щоб "мер відкашлявся" */
-  setTimeout(() => {
-    speakLine(0);
-  }, 700);
+  setTimeout(() => speakLine(0), 700);
 }
 
-/* Повторити */
+/* ============================================================
+   ПОВТОРИТИ (поточну репліку)
+   ============================================================ */
 btnRepeat.addEventListener('click', () => {
   if (currentLine < 0) return;
   stopSpeech();
   setTimeout(() => speakLine(currentLine), 200);
 });
 
-/* Субтитри */
+/* ============================================================
+   СУБТИТРИ
+   ============================================================ */
 btnSubs.addEventListener('click', () => {
   useSubtitles = !useSubtitles;
   btnSubs.classList.toggle('active', useSubtitles);
@@ -824,10 +814,11 @@ btnSubs.addEventListener('click', () => {
     subtitle.classList.add('show');
   }
 });
-/* Активувати кнопку субтитрів за замовчуванням */
 btnSubs.classList.add('active');
 
-/* Завершити */
+/* ============================================================
+   ЗАВЕРШИТИ
+   ============================================================ */
 btnHangup.addEventListener('click', () => {
   stopSpeech();
   stopRingTone();
@@ -836,19 +827,31 @@ btnHangup.addEventListener('click', () => {
 
   if (timerInterval){ clearInterval(timerInterval); timerInterval = null; }
 
-  subtitle.textContent = '📵 Дзвінок завершено';
-  speakerStatus.textContent = 'роз\'єднано';
-  voiceWaves.classList.remove('active');
-  talkAvatar.classList.remove('speaking');
-
+  /* Показуємо екран "Завершено" — БЕЗ автоповтору */
   setTimeout(() => {
     incallScreen.classList.remove('active');
+    incomingScreen.classList.add('gone');
+    endedScreen.classList.add('show');
+  }, 600);
+});
+
+/* ============================================================
+   ПОВТОРИТИ ДЗВІНОК (тільки якщо користувач сам натисне)
+   ============================================================ */
+btnReplay.addEventListener('click', () => {
+  endedScreen.classList.remove('show');
+  currentLine = -1;
+  callSeconds = 0;
+  callTimerEl.textContent = '00:00';
+  subtitle.classList.remove('show');
+  speakerStatus.textContent = 'говорить...';
+
+  /* Невелика пауза — потім знову гудки */
+  setTimeout(() => {
     incomingScreen.classList.remove('gone');
-    currentLine = -1;
-    subtitle.classList.remove('show');
-    /* Знову дзвонити (щоб можна було повторити для наступного класу) */
-    setTimeout(() => { playRingTone(); vib([200,100,200,100,200]); }, 400);
-  }, 2000);
+    playRingTone();
+    vib([200,100,200]);
+  }, 250);
 });
 
 /* ============================================================
@@ -856,7 +859,6 @@ btnHangup.addEventListener('click', () => {
    ============================================================ */
 updateClock();
 initVoices();
-/* Автоматичний запуск гудків після першої взаємодії */
 vib([200, 100, 200, 100, 200]);
 
 /* Клавіатура */
@@ -875,7 +877,6 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-/* Запобігти закриттю при випадковому свайпі */
 document.addEventListener('touchmove', (e) => {
   if (e.touches.length > 1) e.preventDefault();
 }, { passive: false });
